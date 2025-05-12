@@ -1,0 +1,13 @@
+[[redirects]]
+from = "https://rentingmadeeasy.homes/*"
+to = "https://stealth.rentingmadeeasy.homes/:splat"
+status = 301
+force = true
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/upload"
+  to = "/.netlify/functions/upload"
+  status = 200

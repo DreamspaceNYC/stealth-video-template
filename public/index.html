@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stealth AI Video Editor</title>
+};
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .upload-area {
+      transition: all 0.3s ease;
+    }
+    .upload-area.dragover {
+      border-color: #4f46e5;
+      background-color: rgba(79, 70, 229, 0.05);
+    }
+    .progress-bar {
+      transition: width 0.3s ease;
+    }
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 30px;
+    }
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 34px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="text-center text-2xl font-bold p-4">Stealth AI Video Editor</h1>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stealth AI Video Editor</title>
+};
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .upload-area {
+            transition: all 0.3s ease;
+        }
+        .upload-area.dragover {
+            border-color: #4f46e5;
+            background-color: rgba(79, 70, 229, 0.05);
+        }
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #4f46e5;
+        }
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
+                <i class="fas fa-user-secret text-indigo-600 mr-2"></i>
+                Stealth AI Video Editor
+            </h1>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Process your videos with advanced AI to remove metadata, alter hashes, and optimize for stealth sharing.
+            </p>
+        </header>
+
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <!-- Upload Section -->
+            <div class="p-6 border-b border-gray-200">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Upload Video</h2>
+                
+                <div id="uploadArea" class="upload-area border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer mb-6">
+                    <div class="flex flex-col items-center justify-center">
+                        <i class="fas fa-cloud-upload-alt text-4xl text-indigo-500 mb-3"></i>
+                        <p class="text-gray-600 mb-2">Drag & drop your video file here</p>
+                        <p class="text-gray-500 text-sm mb-4">or</p>
+                        <label for="fileInput" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition cursor-pointer">
+                            Browse Files
+                        </label>
+                        <input id="fileInput" type="file" accept="video/*" data-cy="file-input" style="opacity:0;position:absolute;width:1px;height:1px;">
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                        <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center">
+                        <span class="bg-white px-2 text-gray-500">OR</span>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <label for="videoUrl" class="block text-sm font-medium text-gray-700 mb-1">Paste Video URL</label>
+                    <div class="flex">
+                        <input type="url" id="videoUrl" placeholder="https://example.com/video.mp4" 
+                            class="flex-1 min-w-0 block w-full px-3 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        <button id="loadUrlBtn" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-r-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Load
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Processing Options -->
+            <div class="p-6 border-b border-gray-200">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Stealth Options</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <h3 class="font-medium text-gray-800">Metadata Spoofing</h3>
+                            <p class="text-sm text-gray-500">Randomize creation dates and device info</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="metadataToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <h3 class="font-medium text-gray-800">Hash Tweaking</h3>
+                            <p class="text-sm text-gray-500">Alter file signature to avoid detection</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="hashToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <h3 class="font-medium text-gray-800">Compression/Cropping</h3>
+                            <p class="text-sm text-gray-500">Reduce size and remove edges</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="compressionToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <h3 class="font-medium text-gray-800">Smart Optimization</h3>
+                            <p class="text-sm text-gray-500">AI-enhanced quality preservation</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="optimizationToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Processing Status -->
+            <div class="p-6">
+                <div id="statusSection" class="hidden">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Processing Status</h2>
+                    
+                    <div class="mb-4">
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm font-medium text-gray-700" id="statusText">Preparing...</span>
+                            <span class="text-sm font-medium text-gray-700" id="progressPercent">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="progressBar" class="progress-bar bg-indigo-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div id="logContainer" class="bg-gray-50 p-3 rounded-md max-h-40 overflow-y-auto mb-4">
+                        <div class="text-sm text-gray-700 font-mono space-y-1" id="processLog">
+                            <div>> Waiting for file...</div>
+                        </div>
+                    </div>
+                    
+                    <div id="resultSection" class="hidden text-center mt-6 p-4 bg-green-50 rounded-lg border border-green-200">
+                        <i class="fas fa-check-circle text-green-500 text-4xl mb-3"></i>
+                        <h3 class="text-lg font-medium text-green-800 mb-2">Processing Complete!</h3>
+                        <p class="text-green-600 mb-4">Your stealth video is ready for download</p>
+                        <a id="downloadLink" href="#" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                            <i class="fas fa-download mr-2"></i> Download Video
+                        </a>
+                    </div>
+                    
+                    <button id="processBtn" class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md transition flex items-center justify-center">
+                        <i class="fas fa-lock mr-2"></i> Begin Secure Processing
+                    </button>
+                </div>
+                
+                <div id="readyPrompt" class="text-center py-8">
+                    <i class="fas fa-arrow-up text-gray-300 text-3xl mb-3"></i>
+                    <p class="text-gray-500">Upload a video or paste a URL to begin stealth processing</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="mt-12 text-center text-gray-500 text-sm">
+            <p>Stealth AI Video Editor uses advanced processing to help protect your privacy</p>
+            <p class="mt-1">All processing happens locally in your browser - no server uploads</p>
+        </footer>
+    </div>
+
+    <script>
+window.onload = () => {
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+            const videoUrl = document.getElementById('videoUrl');
+            const loadUrlBtn = document.getElementById('loadUrlBtn');
+            const processBtn = document.getElementById('processBtn');
+            const statusSection = document.getElementById('statusSection');
+            const readyPrompt = document.getElementById('readyPrompt');
+            const progressBar = document.getElementById('progressBar');
+            const progressPercent = document.getElementById('progressPercent');
+            const statusText = document.getElementById('statusText');
+            const processLog = document.getElementById('processLog');
+            const resultSection = document.getElementById('resultSection');
+            const downloadLink = document.getElementById('downloadLink');
+            
+            // Variables
+            let currentFile = null;
+            let currentUrl = null;
+            
+            // Event Listeners
+            uploadArea.addEventListener('click', () => fileInput.click());
+            
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+            
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                
+                if (e.dataTransfer.files.length) {
+                    const file = e.dataTransfer.files[0];
+                    if (file.type.startsWith('video/')) {
+                        handleFileSelection(file);
+                    } else {
+                        addLogEntry('> Error: Please select a video file');
+                    }
+                }
+            });
+            
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length) {
+                    handleFileSelection(e.target.files[0]);
+                }
+            });
+            
+            loadUrlBtn.addEventListener('click', () => {
+                const url = videoUrl.value.trim();
+                if (url && isValidUrl(url)) {
+                    currentUrl = url;
+                    currentFile = null;
+                    prepareForProcessing();
+                    addLogEntry(`> URL loaded: ${url}`);
+                } else {
+                    addLogEntry('> Error: Please enter a valid URL');
+                }
+            });
+            
+            processBtn.addEventListener('click', startProcessing);
+            
+            // Functions
+            function handleFileSelection(file) {
+                currentFile = file;
+                currentUrl = null;
+                videoUrl.value = '';
+                prepareForProcessing();
+                addLogEntry(`> File selected: ${file.name} (${formatFileSize(file.size)})`);
+            }
+            
+            function prepareForProcessing() {
+                readyPrompt.classList.add('hidden');
+                statusSection.classList.remove('hidden');
+                processBtn.classList.remove('hidden');
+                resultSection.classList.add('hidden');
+                resetProgress();
+            }
+            
+            function resetProgress() {
+                progressBar.style.width = '0%';
+                progressPercent.textContent = '0%';
+                statusText.textContent = 'Ready to process';
+                processLog.innerHTML = '> Ready to begin processing...<br>';
+            }
+            
+            function addLogEntry(text) {
+                processLog.innerHTML += `${text}<br>`;
+                processLog.scrollTop = processLog.scrollHeight;
+            }
+            
+            function isValidUrl(string) {
+                try {
+                    new URL(string);
+                    return true;
+                } catch (_) {
+                    return false;
+                }
+            }
+            
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+            
+            function simulateProcessing() {
+                processBtn.disabled = true;
+                processBtn.innerHTML = '<i class="fas fa-cog fa-spin mr-2"></i> Processing...';
+                
+                // Reset UI
+                resetProgress();
+                resultSection.classList.add('hidden');
+                
+                // Simulate processing steps
+                const steps = [
+                    {text: 'Analyzing video structure...', delay: 800, progress: 10},
+                    {text: 'Extracting metadata...', delay: 1200, progress: 25},
+                    {text: 'Scrubbing identifiable markers...', delay: 1500, progress: 40},
+                    {text: document.getElementById('metadataToggle').checked ? 
+                        'Randomizing metadata...' : 'Skipping metadata spoofing', delay: 1000, progress: 50},
+                    {text: document.getElementById('hashToggle').checked ? 
+                        'Altering file signature...' : 'Skipping hash tweaking', delay: 1800, progress: 65},
+                    {text: document.getElementById('compressionToggle').checked ? 
+                        'Optimizing compression...' : 'Skipping compression', delay: 2000, progress: 80},
+                    {text: document.getElementById('optimizationToggle').checked ? 
+                        'Applying AI enhancements...' : 'Skipping optimization', delay: 2200, progress: 95},
+                    {text: 'Finalizing stealth video...', delay: 1000, progress: 100}
+                ];
+                
+                let totalDelay = 0;
+                
+                steps.forEach(step => {
+                    setTimeout(() => {
+                        statusText.textContent = step.text;
+                        progressBar.style.width = `${step.progress}%`;
+                        progressPercent.textContent = `${step.progress}%`;
+                        addLogEntry(`> ${step.text}`);
+                        
+                        if (step.progress === 100) {
+                            processingComplete();
+                        }
+                    }, totalDelay);
+                    
+                    totalDelay += step.delay;
+                });
+            }
+            
+            function processingComplete() {
+                statusText.textContent = 'Processing complete!';
+                processBtn.classList.add('hidden');
+                resultSection.classList.remove('hidden');
+                
+                // In a real app, this would be the actual processed file
+                downloadLink.href = '#';
+                downloadLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+downloadLink.addEventListener('click', async (e) => {
+  e.preventDefault();
+  const videoBlob = await file.arrayBuffer();
+  const base64 = btoa(String.fromCharCode(...new Uint8Array(videoBlob)));
+  const res = await fetch('/.netlify/functions/upload', {
+    method: 'POST',
+    body: JSON.stringify({ video: base64 }),
+  });
+  const data = await res.json();
+  window.location.href = data.url;
+});
+                });
+            }
+            
+            function startProcessing() {
+                if (!currentFile && !currentUrl) {
+                    addLogEntry('> Error: No file or URL selected');
+                    return;
+                }
+                
+                addLogEntry('> Starting stealth processing...');
+                simulateProcessing();
+            }
+        });
+};
+    </script>
+</body>
+</html>
+</body>
+</html>

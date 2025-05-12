@@ -1,0 +1,11 @@
+{
+  "name": "Stealth Video Editor",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node",
+  "postCreateCommand": "npm install",
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": ["esbenp.prettier-vscode"]
+    }
+  }
+}
